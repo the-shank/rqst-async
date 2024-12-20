@@ -1,12 +1,12 @@
 use miniserve::{Content, Request, Response};
 use serde::{Deserialize, Serialize};
 
-fn index(_req: Request) -> Response {
+async fn index(_req: Request) -> Response {
     let content = include_str!("../index.html").to_string();
     Ok(Content::Html(content))
 }
 
-fn chat(req: Request) -> Response {
+async fn chat(req: Request) -> Response {
     dbg!(&req);
 
     match &req {
@@ -26,9 +26,11 @@ struct PostData {
     messages: Vec<String>,
 }
 
-fn main() {
+#[tokio::main]
+async fn main() {
     miniserve::Server::new()
         .route("/", index)
         .route("/chat", chat)
         .run()
+        .await
 }
