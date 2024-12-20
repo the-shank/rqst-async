@@ -7,8 +7,6 @@ async fn index(_req: Request) -> Response {
 }
 
 async fn chat(req: Request) -> Response {
-    dbg!(&req);
-
     match &req {
         Request::Get => unreachable!(),
         Request::Post(s) => {
